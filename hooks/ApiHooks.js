@@ -30,7 +30,7 @@ const useMedia = () => {
     console.log();
   };
   useEffect(async () => {
-    loadMedia(0, 5);
+    loadMedia();
   }, []);
 
   return {mediaArray};

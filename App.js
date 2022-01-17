@@ -27,7 +27,7 @@ const App = () => {
         </ImageBackground>
         <List style={styles.list} />
       </SafeAreaView>
-      <StatusBar backgroundColor="black" />
+      <StatusBar backgroundColor="#007" />
     </>
   );
 };
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   background: {
     position: 'relative',
-    margin: 5,
+    marginBottom: 10,
     height: Dimensions.get('screen').height * 0.3,
     resizeMode: 'stretch',
   },

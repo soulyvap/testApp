@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   listItem: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#007',
-    marginHorizontal: 5,
+    backgroundColor: '#383E42',
+    marginHorizontal: 20,
     marginBottom: 10,
     borderRadius: 20,
     height: 150,
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   content: {
     textAlign: 'justify',
     color: 'white',
+    overflow: 'scroll',
   },
 });
 

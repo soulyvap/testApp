@@ -3,9 +3,14 @@ import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
 
-const ListItem = ({singleMedia}) => {
+const ListItem = ({singleMedia, navigation}) => {
   return (
-    <TouchableOpacity style={styles.listItem}>
+    <TouchableOpacity
+      style={styles.listItem}
+      onPress={() => {
+        navigation.navigate('Single', {file: singleMedia});
+      }}
+    >
       <Image
         style={styles.image}
         source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
@@ -23,9 +28,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: '#383E42',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     marginBottom: 10,
-    borderRadius: 20,
+    borderRadius: 10,
     height: 150,
     shadowColor: 'black',
     shadowOffset: {width: 10, height: 10},
@@ -34,9 +39,9 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   image: {
-    flex: 1.3,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    flex: 1.5,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   textSection: {
     display: 'flex',
@@ -57,6 +62,7 @@ const styles = StyleSheet.create({
 });
 
 ListItem.propTypes = {
+  navigation: PropTypes.object,
   singleMedia: PropTypes.object.isRequired,
 };
 

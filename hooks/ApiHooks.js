@@ -22,12 +22,10 @@ const useMedia = () => {
           return mediaData;
         })
       );
-      console.log(media);
       setMediaArray(media);
     } catch (error) {
       console.error(error);
     }
-    console.log();
   };
   useEffect(async () => {
     loadMedia();

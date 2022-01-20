@@ -58,6 +58,27 @@ const useLogin = () => {
 };
 
 const useUser = () => {
+  const postUser = async (data) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      const response = await fetch(baseUrl + 'users', options);
+      const json = await response.json();
+      if (response.ok) {
+        return json;
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   const getUserByToken = async (token) => {
     try {
       const options = {
@@ -76,7 +97,7 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken};
+  return {getUserByToken, postUser};
 };
 
 export {useMedia, useLogin, useUser};

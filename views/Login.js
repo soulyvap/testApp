@@ -1,13 +1,14 @@
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, Text, KeyboardAvoidingView, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useLogin, useUser} from '../hooks/ApiHooks';
+import {useUser} from '../hooks/ApiHooks';
+import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
-  const {setIsLoggedIn} = useContext(MainContext);
-  const {postLogin} = useLogin();
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
   const checkToken = async () => {
@@ -18,6 +19,7 @@ const Login = ({navigation}) => {
         const userData = await getUserByToken(userToken);
         console.log('check token', userData);
         if (userData) {
+          setUser(userData);
           setIsLoggedIn(true);
         }
       } catch (error) {
@@ -30,25 +32,15 @@ const Login = ({navigation}) => {
     checkToken();
   }, []);
 
-  const logIn = async () => {
-    const data = {
-      username: 'souly',
-      password: 'souly12345',
-    };
-    try {
-      const userData = await postLogin(data);
-      const token = await userData.token;
-      await AsyncStorage.setItem('userToken', token);
-      setIsLoggedIn(true);
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : ''}
+      style={styles.container}
+    >
       <Text>Login</Text>
-      <Button title="Sign in!" onPress={logIn} />
-    </View>
+      <LoginForm navigation={navigation} />
+      <RegisterForm navigation={navigation} />
+    </KeyboardAvoidingView>
   );
 };
 

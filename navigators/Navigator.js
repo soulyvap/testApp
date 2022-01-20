@@ -7,13 +7,34 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Single from '../views/Single';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const screenOptions = (route, color) => {
+  let iconName;
+
+  switch (route.name) {
+    case 'Home':
+      iconName = 'home';
+      break;
+    case 'Profile':
+      iconName = 'profile';
+      break;
+    default:
+      break;
+  }
+  return <Icon name={iconName} color={color} size={24} />;
+};
+
 const TabScreen = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color}) => screenOptions(route, color),
+      })}
+    >
       <Tab.Screen name="Home" component={Home}></Tab.Screen>
       <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
     </Tab.Navigator>
@@ -22,7 +43,6 @@ const TabScreen = () => {
 
 const StackScreen = () => {
   const {isLoggedIn} = useContext(MainContext);
-  console.log(isLoggedIn);
   return (
     <Stack.Navigator>
       {isLoggedIn ? (

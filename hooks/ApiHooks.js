@@ -18,20 +18,65 @@ const useMedia = () => {
             baseUrl + 'media/' + item.file_id
           );
           const mediaData = await responsePromise.json();
-          console.log(mediaData);
           return mediaData;
         })
       );
-      setMediaArray(media);
+      setMediaArray(await media);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(async () => {
-    loadMedia();
+    await loadMedia();
   }, []);
 
   return {mediaArray};
 };
 
-export {useMedia};
+const useLogin = () => {
+  const postLogin = async (userCredentials) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userCredentials),
+    };
+    try {
+      const response = await fetch(baseUrl + 'login', options);
+      const userData = await response.json();
+      if (response.ok) {
+        return userData;
+      } else {
+        throw new Error(userData.message);
+      }
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  };
+  return {postLogin};
+};
+
+const useUser = () => {
+  const getUserByToken = async (token) => {
+    try {
+      const options = {
+        method: 'GET',
+        headers: {'x-access-token': token},
+      };
+      const response = await fetch(baseUrl + 'users/user', options);
+      const userData = response.json();
+      if (response.ok) {
+        return userData;
+      } else {
+        throw new Error(userData.message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {getUserByToken};
+};
+
+export {useMedia, useLogin, useUser};

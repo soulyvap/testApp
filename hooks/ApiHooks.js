@@ -1,6 +1,23 @@
 import {useState, useEffect} from 'react';
 import {baseUrl} from '../utils/variables';
 
+const doFetch = async (url, options) => {
+  try {
+    const response = await fetch(url, options);
+    const json = await response.json();
+    if (response.ok) {
+      return json;
+    } else {
+      const message = json.error
+        ? `${json.message}: ${json.error}`
+        : json.message;
+      throw new Error(message || response.statusText);
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
   const loadMedia = async (start = 0, limit = 10) => {
@@ -42,17 +59,8 @@ const useLogin = () => {
       },
       body: JSON.stringify(userCredentials),
     };
-    try {
-      const response = await fetch(baseUrl + 'login', options);
-      const userData = await response.json();
-      if (response.ok) {
-        return userData;
-      } else {
-        throw new Error(userData.message);
-      }
-    } catch (e) {
-      throw new Error(e.message);
-    }
+    const json = await doFetch(baseUrl + 'login', options);
+    return json;
   };
   return {postLogin};
 };
@@ -66,35 +74,17 @@ const useUser = () => {
       },
       body: JSON.stringify(data),
     };
-    try {
-      const response = await fetch(baseUrl + 'users', options);
-      const json = await response.json();
-      if (response.ok) {
-        return json;
-      } else {
-        throw new Error(json.message);
-      }
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const json = await doFetch(baseUrl + 'users', options);
+    return json;
   };
 
   const getUserByToken = async (token) => {
-    try {
-      const options = {
-        method: 'GET',
-        headers: {'x-access-token': token},
-      };
-      const response = await fetch(baseUrl + 'users/user', options);
-      const userData = response.json();
-      if (response.ok) {
-        return userData;
-      } else {
-        throw new Error(userData.message);
-      }
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    const userData = await doFetch(baseUrl + 'users/user', options);
+    return userData;
   };
 
   return {getUserByToken, postUser};

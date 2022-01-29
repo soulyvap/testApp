@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
-import {Text, View, TextInput, Button} from 'react-native';
+import {Text, View, Button} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useLogin} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TextInput} from 'react-native-web';
 
 const LoginForm = () => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);

@@ -1,20 +1,15 @@
-import React, {useContext, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  Keyboard,
-} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {KeyboardAvoidingView, Platform, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {ButtonGroup, Card} from 'react-native-elements';
 
 const Login = ({navigation}) => {
+  const [formToggle, setFormToggle] = useState(false);
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
@@ -40,31 +35,33 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={() => Keyboard.dismiss()}
-      style={{flex: 1}}
-      activeOpacity={1}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : ''}
-        style={styles.container}
-      >
-        <Text>Login</Text>
-        <LoginForm navigation={navigation} />
-        <RegisterForm navigation={navigation} />
+    <TouchableOpacity style={{flex: 1}} activeOpacity={1}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''}>
+        <Card>
+          <ButtonGroup
+            onPress={() => setFormToggle(!formToggle)}
+            selectedIndex={formToggle ? 0 : 1}
+            buttons={['Login', 'Register']}
+          />
+        </Card>
+        {formToggle ? (
+          <Card>
+            <Card.Title>Login</Card.Title>
+            <LoginForm navigation={navigation} />
+          </Card>
+        ) : (
+          <Card>
+            <Card.Title>Register</Card.Title>
+            <RegisterForm
+              setFormToggle={setFormToggle}
+              navigation={navigation}
+            />
+          </Card>
+        )}
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 Login.propTypes = {
   navigation: PropTypes.object,

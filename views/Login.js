@@ -1,11 +1,9 @@
 import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
-  Text,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
@@ -40,16 +38,11 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={() => Keyboard.dismiss()}
-      style={{flex: 1}}
-      activeOpacity={1}
-    >
+    <TouchableOpacity style={{flex: 1}} activeOpacity={1}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
-        <Text>Login</Text>
         <LoginForm navigation={navigation} />
         <RegisterForm navigation={navigation} />
       </KeyboardAvoidingView>

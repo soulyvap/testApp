@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
+import {StyleSheet, SafeAreaView, Text} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
+import {Button, Card} from 'react-native-elements';
 
 const Profile = () => {
   const {setIsLoggedIn, user} = useContext(MainContext);
@@ -41,22 +42,28 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
-      <Text>{user.username}</Text>
-      <Image
-        source={{uri: avatar}}
-        style={{width: '80%', height: '50%'}}
-        resizeMode="contain"
-      />
-      <Text>{user.email}</Text>
-      <Text>{user.full_name}</Text>
-      <Button
-        title="Logout"
-        onPress={async () => {
-          await AsyncStorage.clear();
-          setIsLoggedIn(false);
+      <Card
+        containerStyle={{
+          width: '80%',
+          borderRadius: 10,
         }}
-      />
+      >
+        <Card.Title>Profile</Card.Title>
+        <Card.Image source={{uri: avatar}} style={{marginBottom: 20}} />
+        <Text>Username: {user.username}</Text>
+        <Text>Email: {user.email}</Text>
+        <Text>Full name: {user.full_name}</Text>
+        <Button
+          title="Logout"
+          onPress={async () => {
+            await AsyncStorage.clear();
+            setIsLoggedIn(false);
+          }}
+          containerStyle={{
+            marginVertical: 10,
+          }}
+        />
+      </Card>
     </SafeAreaView>
   );
 };
@@ -67,7 +74,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
   },
 });
 

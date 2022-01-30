@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
-import {Text, View, TextInput, Button} from 'react-native';
+import {Text, TextInput} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useLogin} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button, Card} from 'react-native-elements';
 
 const LoginForm = () => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -34,7 +35,8 @@ const LoginForm = () => {
   };
 
   return (
-    <View>
+    <Card>
+      <Card.Title>Login</Card.Title>
       <Controller
         control={control}
         rules={{
@@ -75,8 +77,14 @@ const LoginForm = () => {
       />
       {errors.password && <Text>This is required.</Text>}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+      <Button
+        containerStyle={{
+          marginVertical: 10,
+        }}
+        title="Submit"
+        onPress={handleSubmit(onSubmit)}
+      />
+    </Card>
   );
 };
 

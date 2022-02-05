@@ -4,7 +4,7 @@ import {useForm, Controller} from 'react-hook-form';
 import {useLogin} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TextInput} from 'react-native-web';
+import {Input} from 'react-native-elements/dist/input/Input';
 
 const LoginForm = () => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -42,18 +42,17 @@ const LoginForm = () => {
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             placeholder="Username"
+            errorMessage={errors.username && <Text>This is required.</Text>}
           />
         )}
         name="username"
       />
-      {errors.username && <Text>This is required.</Text>}
 
       <Controller
         control={control}
@@ -62,19 +61,18 @@ const LoginForm = () => {
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             secureTextEntry={true}
             placeholder="Password"
+            errorMessage={errors.password && <Text>This is required.</Text>}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>This is required.</Text>}
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>

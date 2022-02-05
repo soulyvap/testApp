@@ -2,11 +2,7 @@ import React from 'react';
 import {Dimensions, SafeAreaView} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
-<<<<<<< Updated upstream
 import {Card, Icon, Text, ThemeProvider} from 'react-native-elements';
-=======
-import {Card, Image, Text, ThemeProvider} from 'react-native-elements';
->>>>>>> Stashed changes
 import GlobalStyles from '../utils/GlobalStyles';
 
 const theme = {};

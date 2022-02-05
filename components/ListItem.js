@@ -36,6 +36,22 @@ const ListItem = ({singleMedia, navigation}) => {
   );
 };
 
+// const ListItem2 = ({singleMedia, navigation}) => {
+//   return (
+//     <TouchableOpacity
+//       onPress={() => {
+//         navigation.navigate('Single', {file: singleMedia});
+//       }}
+//     >
+//       <Image source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}} />
+//       <View>
+//         <Text>{singleMedia.title}</Text>
+//         <Text>{singleMedia.description}</Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// };
+
 ListItem.propTypes = {
   navigation: PropTypes.object,
   singleMedia: PropTypes.object.isRequired,

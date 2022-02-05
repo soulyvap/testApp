@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Text} from 'react-native';
+import {Text, Button, Image, ScrollView} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
-import {Card, Button, ThemeProvider} from 'react-native-elements';
+import {Card} from 'react-native-elements';
 import PropTypes from 'prop-types';
 
 const Profile = ({navigation}) => {
@@ -41,22 +41,18 @@ const Profile = ({navigation}) => {
     fetchAvatar();
   }, []);
 
-  const theme = {
-    Button: {
-      buttonStyle: {
-        marginVertical: 10,
-      },
-    },
-  };
-
   return (
-    <ThemeProvider theme={theme}>
+    <ScrollView>
       <Card>
-        <Card.Title>Profile</Card.Title>
-        <Card.Image style={{marginBottom: 10}} source={{uri: avatar}} />
-        <Text>Username: {user.username}</Text>
-        <Text>Email: {user.email}</Text>
-        <Text>Fullname: {user.full_name}</Text>
+        <Text>Profile</Text>
+        <Text>{user.username}</Text>
+        <Image
+          source={{uri: avatar}}
+          style={{width: '80%', height: '50%'}}
+          resizeMode="contain"
+        />
+        <Text>{user.email}</Text>
+        <Text>{user.full_name}</Text>
         <Button
           title="Logout"
           onPress={async () => {
@@ -71,7 +67,7 @@ const Profile = ({navigation}) => {
           }}
         />
       </Card>
-    </ThemeProvider>
+    </ScrollView>
   );
 };
 

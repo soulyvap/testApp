@@ -63,6 +63,7 @@ const RegisterForm = ({setFormToggle}) => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
+            style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -91,6 +92,7 @@ const RegisterForm = ({setFormToggle}) => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
+            style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -119,6 +121,7 @@ const RegisterForm = ({setFormToggle}) => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
+            style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -144,6 +147,7 @@ const RegisterForm = ({setFormToggle}) => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
+            style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -165,6 +169,7 @@ const RegisterForm = ({setFormToggle}) => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
+            style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}

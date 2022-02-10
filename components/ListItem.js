@@ -1,12 +1,57 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
-import {Avatar, Button, ListItem as NBListItem} from 'react-native-elements';
+import {
+  Avatar,
+  ButtonGroup,
+  ListItem as NBListItem,
+} from 'react-native-elements';
+import {useMedia} from '../hooks/ApiHooks';
+import {Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MainContext} from '../contexts/MainContext';
 
-const ListItem = ({singleMedia, navigation}) => {
+const ListItem = ({singleMedia, navigation, myFiles}) => {
+  const {deleteMedia} = useMedia();
+  const {update, setUpdate} = useContext(MainContext);
+
+  const deletePost = async () => {
+    const userToken = await AsyncStorage.getItem('userToken');
+    const response = await deleteMedia(singleMedia.file_id, userToken);
+    response && setUpdate(update + 1);
+  };
+
+  const deleteAlert = async () => {
+    Alert.alert(
+      'Deleting',
+      'Do you really want to delete this post?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            deletePost();
+          },
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
   return (
     <>
-      <NBListItem containerStyle={{height: 70}} bottomDivider={true}>
+      <NBListItem
+        bottomDivider={true}
+        onPress={() => {
+          navigation.navigate('Single', {file: singleMedia});
+        }}
+      >
         <Avatar
           size={60}
           source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
@@ -19,18 +64,24 @@ const ListItem = ({singleMedia, navigation}) => {
             {singleMedia.description}
           </NBListItem.Subtitle>
         </NBListItem.Content>
-        <Button
-          titleStyle={{fontSize: 14}}
-          buttonStyle={{
-            paddingHorizontal: 15,
-            paddingVertical: 4,
-            borderRadius: 5,
-          }}
-          title={'View'}
-          onPress={() => {
-            navigation.navigate('Single', {file: singleMedia});
-          }}
-        />
+        {myFiles && (
+          <ButtonGroup
+            containerStyle={{width: 150}}
+            buttons={['Modify', 'Delete']}
+            onPress={(value) => {
+              switch (value) {
+                case 0:
+                  navigation.navigate('Modify', {file: singleMedia});
+                  break;
+                case 1:
+                  deleteAlert();
+                  break;
+                default:
+                  break;
+              }
+            }}
+          />
+        )}
       </NBListItem>
     </>
   );
@@ -39,6 +90,7 @@ const ListItem = ({singleMedia, navigation}) => {
 ListItem.propTypes = {
   navigation: PropTypes.object,
   singleMedia: PropTypes.object.isRequired,
+  myFiles: PropTypes.bool,
 };
 
 export default ListItem;

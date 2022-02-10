@@ -3,18 +3,18 @@ import {SafeAreaView} from 'react-native';
 import List from '../components/List';
 import PropTypes from 'prop-types';
 
-const Home = ({navigation}) => {
+const MyFiles = ({navigation}) => {
   return (
     <>
       <SafeAreaView>
-        <List navigation={navigation} myFiles={false} />
+        <List navigation={navigation} myFiles={true} />
       </SafeAreaView>
     </>
   );
 };
 
-Home.propTypes = {
+MyFiles.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default Home;
+export default MyFiles;

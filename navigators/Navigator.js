@@ -10,6 +10,8 @@ import {MainContext} from '../contexts/MainContext';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ModifyUser from '../views/ModifyUser';
 import Upload from '../views/Upload';
+import MyFiles from '../views/MyFiles';
+import Modify from '../views/Modify';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -27,6 +29,9 @@ const screenOptions = (route, color) => {
     case 'Upload':
       iconName = 'upload';
       break;
+    case 'My Files':
+      iconName = 'folder1';
+      break;
     default:
       break;
   }
@@ -41,6 +46,7 @@ const TabScreen = () => {
       })}
     >
       <Tab.Screen name="Home" component={Home}></Tab.Screen>
+      <Tab.Screen name="My Files" component={MyFiles}></Tab.Screen>
       <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
       <Tab.Screen name="Upload" component={Upload}></Tab.Screen>
     </Tab.Navigator>
@@ -63,6 +69,7 @@ const StackScreen = () => {
             name="Modify user"
             component={ModifyUser}
           ></Stack.Screen>
+          <Stack.Screen name="Modify" component={Modify}></Stack.Screen>
         </>
       ) : (
         <Stack.Screen name="Login" component={Login}></Stack.Screen>
